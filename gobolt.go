@@ -52,6 +52,8 @@ func (gbase *Gobolt) NewBucket(bucket_name string) (*bolt.Bucket, error) {
 	return bucket, err
 }
 
+// Save object
+
 func main() {
 
 }
