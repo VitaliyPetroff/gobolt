@@ -1,23 +1,26 @@
 # gobolt
+
+**Do not use! It's in development stage!**
+
 Simplified interface for work with BoldDB database
 
 ##Roadmap
 
 **DataBase**
- - [.] Open database "Open"
- - [.] Function to safe close database "Close"
- - [.] Get list of all bucket "GetBucketList"
+ - [x] Open database "Open"
+ - [x] Function to safe close database "Close"
+ - [x] Get list of all bucket "GetBucketList"
  - [ ] Get database struct
 
 **Bucket**
- - [.] Create new bucket "CreateBucket"
+ - [x] Create new bucket "CreateBucket"
  - [ ] Create indexed bucket "CreateIdBucket"
  - [ ] Get bucket info (indexed or not, use timestamp or not) "GetBucketInfo" (indexed: bool, usetime: bool)
- - [ ] Get bucket data
+ - [x] Get bucket data
 
 **Object**
-- [.] Create new object in bucket or rewrite existing "SetByKey" (safe mode enabled)
-- [ ] Get object by key "GetByKey"
+- [x] Create new object in bucket or rewrite existing "SetByKey" (safe mode enabled)
+- [x] Get object by key "GetByKey"
 - [ ] Update object in bucket with full rewrite or only filled vals "UpdateByKey" (safe mode enabled)
 - [ ] Delete object in bucket "DeleteByKey"
 - [ ] Get list of objects by value "GetListByVal"
