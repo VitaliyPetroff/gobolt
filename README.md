@@ -6,6 +6,7 @@ Simplified interface for work with BoldDB database
 **DataBase**
  - [ ] Open database "Open"
  - [ ] Function to safe close database "Close"
+ - [ ] Get database struct
 
 **Bucket**
  - [ ] Create new bucket "CreateBucket"
@@ -18,6 +19,8 @@ Simplified interface for work with BoldDB database
 - [ ] Update object in bucket with full rewrite or only filled vals "UpdateByKey" (safe mode enabled)
 - [ ] Delete object in bucket "DeleteByKey"
 - [ ] Get list of objects by value "GetListByVal"
+- [ ] Get list of objects by using 'between search'
+- [ ] Get list of objects by using 'less or more search'
 
 **Indexed Object**
 - [ ] Create new object in bucket and get new id "SetWithNewId"
