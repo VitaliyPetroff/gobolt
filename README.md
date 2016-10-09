@@ -1,5 +1,6 @@
 # gobolt
 
+[![Build Status](https://drone.io/github.com/VitaliyPetroff/gobolt/status.png)](https://drone.io/github.com/VitaliyPetroff/gobolt/latest)
 **Do not use! It's in development stage!**
 
 Simplified interface for work with BoldDB database
