@@ -1,37 +1,36 @@
 package main
 
 import (
-	// "encoding/binary"
-	//"bytes"
 	"encoding/json"
 	"fmt"
-	// "strconv"
 
 	"github.com/boltdb/bolt"
+	//"github.com/gorilla/schema"
 )
 
 // Data base location settings
 type GoBoltConf struct {
-	path string
+	Path string
 }
 
+// Gobolt struct
 type Gobolt struct {
 	gb *bolt.DB
 }
 
-// type Object struct {
-//   ID   int    `json:"id"`
-//   Name string `json:"name"`
-//   Data string `json:"data"`
-// }
-
-type object interface{}
+// Bucket data struct
+type BucketData struct {
+	Key  string
+	Data interface{}
+}
 
 // Open database
 func (gbase *Gobolt) Open(gbc GoBoltConf) error {
 	var err error
+
 	// ToDo: in safe mode don't create database if it's not exist.
-	gbase.gb, err = bolt.Open(gbc.path, 0644, nil)
+	gbase.gb, err = bolt.Open(gbc.Path, 0644, nil)
+
 	return err
 }
 
@@ -52,6 +51,7 @@ func (gbase *Gobolt) GetBucketList() ([]string, error) {
 			return nil
 		})
 	})
+
 	return buckets, err
 }
 
@@ -68,22 +68,31 @@ func (gbase *Gobolt) CreateBucket(bucket_name string) (*bolt.Bucket, error) {
 
 // Get all data from bucket
 func (gbase *Gobolt) GetBucketData(bucket_name string) (interface{}, error) {
+	var bucket_data_list []BucketData
+
 	err := gbase.gb.View(func(tx *bolt.Tx) error {
 		bucket := tx.Bucket([]byte(bucket_name))
 		if bucket == nil {
 			return fmt.Errorf("Bucket %q not found!", bucket_name)
 		}
 
-		bucket.ForEach(func(k, v []byte) error {
-			s := string(v[:])
-			fmt.Printf("key=%s, value=%s\n", k, s)
+		err := bucket.ForEach(func(k, v []byte) error {
+			var bucket_data BucketData
+			bucket_data.Key = string(k[:])
+
+			err := json.Unmarshal(v, &bucket_data.Data)
+			if err != nil {
+				return err
+			}
+
+			bucket_data_list = append(bucket_data_list, bucket_data)
 			return nil
 		})
 
-		return nil
+		return err
 	})
 
-	return nil, err
+	return bucket_data_list, err
 }
 
 // Create new object in bucket or rewrite existing (safe mode enabled)
@@ -110,26 +119,30 @@ func (gbase *Gobolt) SetByKey(bucket_name string, key_name string, obj interface
 
 		return nil
 	})
+
 	return err
 }
 
 // Get object by key
-func (gbase *Gobolt) GetByKey(bucket_name string, key_name string) (*object, error) {
+func (gbase *Gobolt) GetByKey(bucket_name string, key_name string, obj interface{}) error {
 	err := gbase.gb.View(func(tx *bolt.Tx) error {
 		bucket := tx.Bucket([]byte(bucket_name))
 		if bucket == nil {
 			return fmt.Errorf("Bucket %s not found!", bucket_name)
 		}
+		err := bucket.ForEach(func(k, v []byte) error {
+			err := json.Unmarshal(v, &obj)
+			if err != nil {
+				return err
+			}
 
-		bucket.ForEach(func(k, v []byte) error {
-			fmt.Printf("key=%s, value=%s\n", k, v)
 			return nil
 		})
 
-		return nil
+		return err
 	})
 
-	return nil, err
+	return err
 }
 
 type mySubObject struct {
@@ -148,7 +161,7 @@ func main() {
 	var bname1 = "bucket_one"
 	var bname2 = "bucket_two"
 
-	gbc.path = "testdb.bdb"
+	gbc.Path = "testdb.bdb"
 
 	db := new(Gobolt)
 	err := db.Open(gbc)
@@ -200,16 +213,38 @@ func main() {
 		fmt.Println(err.Error())
 	}
 
-	var list []string
-	list, err = db.GetBucketList()
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		fmt.Println("readed from db:")
-		fmt.Println(list)
-	}
+	// var list interface{}
+	// list, err = db.GetBucketList()
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// } else {
+	// 	fmt.Println("readed from db:")
+	// 	fmt.Println(list)
+	// }
 
-	_, _ = db.GetBucketData(bname1)
-	_, _ = db.GetBucketData(bname2)
+	// var bucket_data interface{}
+	// bucket_data, err = db.GetBucketData(bname1)
+	// if err != nil {
+	// 	fmt.Println("error: " + err.Error())
+	// } else {
+	// 	fmt.Printf("bucket1: %q\n", bucket_data)
+	// }
+
+	// bucket_data, err = db.GetBucketData(bname2)
+	// if err != nil {
+	// 	fmt.Println("error: " + err.Error())
+	// } else {
+	// 	fmt.Printf("bucket2: %q\n", bucket_data)
+	// }
+
+	var mo myObject
+	err = db.GetByKey(bname1, "mo4", &mo)
+	if err != nil {
+		fmt.Println("error: " + err.Error())
+	} else {
+		fmt.Printf("GetByKey: mo4 ==  %q\n", mo)
+		fmt.Printf("mo.F1: %s\n", mo.F1)
+		fmt.Printf("mo.F2: %s\n", mo.F2)
+	}
 
 }
