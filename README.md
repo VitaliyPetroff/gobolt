@@ -39,4 +39,4 @@ Simplified interface for work with BoldDB database
  - [ ] Create documentation with examples
  - [ ] Something else
 
- Coverage: 0%
+ Coverage: 30%
