@@ -33,6 +33,7 @@ Simplified interface for work with BoldDB database
 - [ ] Create new object in bucket and get new id "SetWithNewId"
 
 **Other**
+ - [ ] Support transactions
  - [ ] Safe mode for work with database
  - [ ] Limit for objects list size
  - [ ] Sort list of objects by key
