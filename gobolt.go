@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 
 	"github.com/boltdb/bolt"
@@ -130,18 +131,26 @@ func (gbase *Gobolt) GetByKey(bucket_name string, key_name string, obj interface
 		if bucket == nil {
 			return fmt.Errorf("Bucket %s not found!", bucket_name)
 		}
-		err := bucket.ForEach(func(k, v []byte) error {
+		v := bucket.Get([]byte(key_name))
+		if v != nil {
 			err := json.Unmarshal(v, &obj)
 			if err != nil {
 				return err
 			}
-
 			return nil
-		})
+		}
+		err := errors.New("Key: '" + key_name + "' not found")
 
 		return err
 	})
+	return err
+}
 
+// Delete object from bucket
+func (gbase *Gobolt) Delete(bucket_name string, key_name string) error {
+	err := gbase.gb.Update(func(tx *bolt.Tx) error {
+		return tx.Bucket([]byte(bucket_name)).Delete([]byte(key_name))
+	})
 	return err
 }
 
@@ -238,13 +247,26 @@ func main() {
 	// }
 
 	var mo myObject
-	err = db.GetByKey(bname1, "mo4", &mo)
+	err = db.GetByKey(bname1, "mo1", &mo)
 	if err != nil {
 		fmt.Println("error: " + err.Error())
 	} else {
-		fmt.Printf("GetByKey: mo4 ==  %q\n", mo)
+		fmt.Printf("GetByKey: mo1 ==  %q\n", mo)
 		fmt.Printf("mo.F1: %s\n", mo.F1)
 		fmt.Printf("mo.F2: %s\n", mo.F2)
 	}
 
+	err = db.Delete(bname1, "mo1")
+	if err != nil {
+		fmt.Println("error: " + err.Error())
+	}
+
+	err = db.GetByKey(bname1, "mo1", &mo)
+	if err != nil {
+		fmt.Println("error: " + err.Error())
+	} else {
+		fmt.Printf("GetByKey: mo1 ==  %q\n", mo)
+		fmt.Printf("mo.F1: %s\n", mo.F1)
+		fmt.Printf("mo.F2: %s\n", mo.F2)
+	}
 }
