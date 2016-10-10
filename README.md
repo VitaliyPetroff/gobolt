@@ -24,7 +24,7 @@ Simplified interface for work with BoldDB database
 - [x] Create new object in bucket or rewrite existing "SetByKey" (safe mode enabled)
 - [x] Get object by key "GetByKey"
 - [ ] Update object in bucket with full rewrite or only filled vals "UpdateByKey" (safe mode enabled)
-- [ ] Delete object in bucket "DeleteByKey"
+- [x] Delete object in bucket "Delete"
 - [ ] Get list of objects by value "GetListByVal"
 - [ ] Get list of objects by using 'between search'
 - [ ] Get list of objects by using 'less or more search'
