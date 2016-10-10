@@ -1,6 +1,7 @@
 # gobolt
 
 [![Build Status](https://drone.io/github.com/VitaliyPetroff/gobolt/status.png)](https://drone.io/github.com/VitaliyPetroff/gobolt/latest)
+[![Coverage Status](https://coveralls.io/repos/github/VitaliyPetroff/gobolt/badge.svg?branch=master)](https://coveralls.io/github/VitaliyPetroff/gobolt?branch=master)
 
 **Do not use! It's in development stage!**
 
