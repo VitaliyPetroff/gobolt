@@ -167,7 +167,11 @@ func (gbase *Gobolt) GetNextSequence(bucket_name string) (int, error) {
 		id = int(data_id)
 		return nil
 	})
-	return id, err
+	if err != nil {
+		return nil, err
+	} else {
+		return id, nil
+	}
 }
 
 // type mySubObject struct {
