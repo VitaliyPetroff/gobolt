@@ -154,119 +154,119 @@ func (gbase *Gobolt) Delete(bucket_name string, key_name string) error {
 	return err
 }
 
-type mySubObject struct {
-	F1 string `json:"F1"`
-	F2 string
-}
+// type mySubObject struct {
+// 	F1 string `json:"F1"`
+// 	F2 string
+// }
 
-type myObject struct {
-	F1 string
-	F2 string
-	F3 mySubObject
-}
+// type myObject struct {
+// 	F1 string
+// 	F2 string
+// 	F3 mySubObject
+// }
 
-func main() {
-	var gbc GoBoltConf
-	var bname1 = "bucket_one"
-	var bname2 = "bucket_two"
+// func main() {
+// 	var gbc GoBoltConf
+// 	var bname1 = "bucket_one"
+// 	var bname2 = "bucket_two"
 
-	gbc.Path = "testdb.bdb"
+// 	gbc.Path = "testdb.bdb"
 
-	db := new(Gobolt)
-	err := db.Open(gbc)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+// 	db := new(Gobolt)
+// 	err := db.Open(gbc)
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 	}
 
-	_, err = db.CreateBucket(bname1)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+// 	_, err = db.CreateBucket(bname1)
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 	}
 
-	_, err = db.CreateBucket(bname2)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+// 	_, err = db.CreateBucket(bname2)
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 	}
 
-	mo1 := myObject{F1: "aa", F2: "ab", F3: mySubObject{F1: "aca", F2: "acb"}}
-	mo2 := myObject{F1: "ba", F2: "bb", F3: mySubObject{F1: "bca", F2: "bcb"}}
-	mo3 := myObject{F1: "ca", F2: "cb", F3: mySubObject{F1: "cca", F2: "ccb"}}
+// 	mo1 := myObject{F1: "aa", F2: "ab", F3: mySubObject{F1: "aca", F2: "acb"}}
+// 	mo2 := myObject{F1: "ba", F2: "bb", F3: mySubObject{F1: "bca", F2: "bcb"}}
+// 	mo3 := myObject{F1: "ca", F2: "cb", F3: mySubObject{F1: "cca", F2: "ccb"}}
 
-	err = db.SetByKey(bname1, "mo1", mo1)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+// 	err = db.SetByKey(bname1, "mo1", mo1)
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 	}
 
-	err = db.SetByKey(bname1, "mo2", mo2)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+// 	err = db.SetByKey(bname1, "mo2", mo2)
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 	}
 
-	err = db.SetByKey(bname1, "mo3", mo3)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+// 	err = db.SetByKey(bname1, "mo3", mo3)
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 	}
 
-	err = db.SetByKey(bname2, "mo1", mo1)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+// 	err = db.SetByKey(bname2, "mo1", mo1)
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 	}
 
-	err = db.SetByKey(bname2, "mo2", mo2)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+// 	err = db.SetByKey(bname2, "mo2", mo2)
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 	}
 
-	err = db.SetByKey(bname2, "mo3", mo3)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+// 	err = db.SetByKey(bname2, "mo3", mo3)
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 	}
 
-	// var list interface{}
-	// list, err = db.GetBucketList()
-	// if err != nil {
-	// 	fmt.Println(err.Error())
-	// } else {
-	// 	fmt.Println("readed from db:")
-	// 	fmt.Println(list)
-	// }
+// 	// var list interface{}
+// 	// list, err = db.GetBucketList()
+// 	// if err != nil {
+// 	// 	fmt.Println(err.Error())
+// 	// } else {
+// 	// 	fmt.Println("readed from db:")
+// 	// 	fmt.Println(list)
+// 	// }
 
-	// var bucket_data interface{}
-	// bucket_data, err = db.GetBucketData(bname1)
-	// if err != nil {
-	// 	fmt.Println("error: " + err.Error())
-	// } else {
-	// 	fmt.Printf("bucket1: %q\n", bucket_data)
-	// }
+// 	// var bucket_data interface{}
+// 	// bucket_data, err = db.GetBucketData(bname1)
+// 	// if err != nil {
+// 	// 	fmt.Println("error: " + err.Error())
+// 	// } else {
+// 	// 	fmt.Printf("bucket1: %q\n", bucket_data)
+// 	// }
 
-	// bucket_data, err = db.GetBucketData(bname2)
-	// if err != nil {
-	// 	fmt.Println("error: " + err.Error())
-	// } else {
-	// 	fmt.Printf("bucket2: %q\n", bucket_data)
-	// }
+// 	// bucket_data, err = db.GetBucketData(bname2)
+// 	// if err != nil {
+// 	// 	fmt.Println("error: " + err.Error())
+// 	// } else {
+// 	// 	fmt.Printf("bucket2: %q\n", bucket_data)
+// 	// }
 
-	var mo myObject
-	err = db.GetByKey(bname1, "mo1", &mo)
-	if err != nil {
-		fmt.Println("error: " + err.Error())
-	} else {
-		fmt.Printf("GetByKey: mo1 ==  %q\n", mo)
-		fmt.Printf("mo.F1: %s\n", mo.F1)
-		fmt.Printf("mo.F2: %s\n", mo.F2)
-	}
+// 	var mo myObject
+// 	err = db.GetByKey(bname1, "mo1", &mo)
+// 	if err != nil {
+// 		fmt.Println("error: " + err.Error())
+// 	} else {
+// 		fmt.Printf("GetByKey: mo1 ==  %q\n", mo)
+// 		fmt.Printf("mo.F1: %s\n", mo.F1)
+// 		fmt.Printf("mo.F2: %s\n", mo.F2)
+// 	}
 
-	err = db.Delete(bname1, "mo1")
-	if err != nil {
-		fmt.Println("error: " + err.Error())
-	}
+// 	err = db.Delete(bname1, "mo1")
+// 	if err != nil {
+// 		fmt.Println("error: " + err.Error())
+// 	}
 
-	err = db.GetByKey(bname1, "mo1", &mo)
-	if err != nil {
-		fmt.Println("error: " + err.Error())
-	} else {
-		fmt.Printf("GetByKey: mo1 ==  %q\n", mo)
-		fmt.Printf("mo.F1: %s\n", mo.F1)
-		fmt.Printf("mo.F2: %s\n", mo.F2)
-	}
-}
+// 	err = db.GetByKey(bname1, "mo1", &mo)
+// 	if err != nil {
+// 		fmt.Println("error: " + err.Error())
+// 	} else {
+// 		fmt.Printf("GetByKey: mo1 ==  %q\n", mo)
+// 		fmt.Printf("mo.F1: %s\n", mo.F1)
+// 		fmt.Printf("mo.F2: %s\n", mo.F2)
+// 	}
+// }

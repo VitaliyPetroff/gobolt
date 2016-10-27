@@ -43,4 +43,4 @@ Simplified interface for work with BoldDB database
  - [ ] Create documentation with examples
  - [ ] Something else
 
- Coverage: 30%
+ Progress: 30%
