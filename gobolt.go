@@ -154,6 +154,22 @@ func (gbase *Gobolt) Delete(bucket_name string, key_name string) error {
 	return err
 }
 
+// Get next sequence for the bucket
+func (gbase *Gobolt) GetNextSequence(bucket_name string) (int, error) {
+	var id int
+	err := gbase.gb.Update(func(tx *bolt.Tx) error {
+		bucket, err := tx.CreateBucketIfNotExists([]byte(bucket_name))
+		if err != nil {
+			return err
+		}
+
+		data_id, _ := bucket.NextSequence()
+		id = int(data_id)
+		return nil
+	})
+	return id, err
+}
+
 // type mySubObject struct {
 // 	F1 string `json:"F1"`
 // 	F2 string
