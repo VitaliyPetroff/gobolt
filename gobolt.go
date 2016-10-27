@@ -1,4 +1,4 @@
-package main
+package gobolt
 
 import (
 	"encoding/json"
